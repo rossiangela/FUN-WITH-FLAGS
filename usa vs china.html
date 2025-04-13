@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>USA vs China Flag Boxing</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #222;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .boxing-ring {
+            position: relative;
+            width: 800px;
+            height: 500px;
+            background-color: #555;
+            border: 10px solid #8B4513;
+            border-radius: 5px;
+        }
+        .ring-floor {
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                45deg,
+                #444,
+                #444 10px,
+                #555 10px,
+                #555 20px
+            );
+        }
+        .ring-post {
+            position: absolute;
+            width: 10px;
+            height: 60px;
+            background-color: #8B4513;
+        }
+        .ring-post.top-left {
+            top: 0;
+            left: 0;
+        }
+        .ring-post.top-right {
+            top: 0;
+            right: 0;
+        }
+        .ring-post.bottom-left {
+            bottom: 0;
+            left: 0;
+        }
+        .ring-post.bottom-right {
+            bottom: 0;
+            right: 0;
+        }
+        .ring-rope {
+            position: absolute;
+            background-color: #ddd;
+            height: 5px;
+        }
+        .rope-top {
+            top: 20px;
+            left: 10px;
+            width: calc(100% - 20px);
+        }
+        .rope-bottom {
+            bottom: 20px;
+            left: 10px;
+            width: calc(100% - 20px);
+        }
+        .rope-left {
+            left: 10px;
+            top: 20px;
+            height: calc(100% - 40px);
+            width: 5px;
+        }
+        .rope-right {
+            right: 10px;
+            top: 20px;
+            height: calc(100% - 40px);
+            width: 5px;
+        }
+        .flag {
+            position: absolute;
+            width: 150px;
+            height: 100px;
+            transition: transform 0.2s ease;
+        }
+        .usa-flag {
+            left: 200px;
+            top: 200px;
+        }
+        .china-flag {
+            right: 200px;
+            top: 200px;
+        }
+        .glove {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: #C62828;
+            border-radius: 50%;
+            border: 5px solid #B71C1C;
+            z-index: 10;
+            opacity: 0;
+            transition: all 0.1s ease;
+        }
+        .scoreboard {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #000;
+            color: #ff0;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .health-bar {
+            position: absolute;
+            height: 20px;
+            width: 200px;
+            background-color: #eee;
+            border: 2px solid #333;
+        }
+        .health-bar-usa {
+            left: 50px;
+            top: 50px;
+        }
+        .health-bar-china {
+            right: 50px;
+            top: 50px;
+        }
+        .health-fill {
+            height: 100%;
+            background-color: #4CAF50;
+            transition: width 0.3s;
+        }
+        .usa-health {
+            width: 100%;
+        }
+        .china-health {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="boxing-ring">
+        <div class="ring-floor"></div>
+        <div class="ring-post top-left"></div>
+        <div class="ring-post top-right"></div>
+        <div class="ring-post bottom-left"></div>
+        <div class="ring-post bottom-right"></div>
+        <div class="ring-rope rope-top"></div>
+        <div class="ring-rope rope-bottom"></div>
+        <div class="ring-rope rope-left"></div>
+        <div class="ring-rope rope-right"></div>
+        
+        <div class="health-bar health-bar-usa">
+            <div class="health-fill usa-health"></div>
+        </div>
+        <div class="health-bar health-bar-china">
+            <div class="health-fill china-health"></div>
+        </div>
+        
+        <div class="scoreboard">ROUND 1</div>
+        
+        <svg class="flag usa-flag" viewBox="0 0 1235 650">
+            <!-- USA Flag -->
+            <rect width="1235" height="650" fill="#FFFFFF" />
+            <rect width="1235" height="50" fill="#B22234" />
+            <rect y="100" width="1235" height="50" fill="#B22234" />
+            <rect y="200" width="1235" height="50" fill="#B22234" />
+            <rect y="300" width="1235" height="50" fill="#B22234" />
+            <rect y="400" width="1235" height="50" fill="#B22234" />
+            <rect y="500" width="1235" height="50" fill="#B22234" />
+            <rect y="600" width="1235" height="50" fill="#B22234" />
+            <rect width="494" height="350" fill="#3C3B6E" />
+            
+            <!-- Stars -->
+            <g fill="#FFFFFF">
+                <!-- Row 1 -->
+                <circle cx="41.2" cy="29.2" r="18" />
+                <circle cx="123.5" cy="29.2" r="18" />
+                <circle cx="205.8" cy="29.2" r="18" />
+                <circle cx="288.2" cy="29.2" r="18" />
+                <circle cx="370.5" cy="29.2" r="18" />
+                <circle cx="452.8" cy="29.2" r="18" />
+                
+                <!-- Row 2 -->
+                <circle cx="82.3" cy="87.5" r="18" />
+                <circle cx="164.6" cy="87.5" r="18" />
+                <circle cx="246.9" cy="87.5" r="18" />
+                <circle cx="329.3" cy="87.5" r="18" />
+                <circle cx="411.6" cy="87.5" r="18" />
+                
+                <!-- Row 3 -->
+                <circle cx="41.2" cy="145.8" r="18" />
+                <circle cx="123.5" cy="145.8" r="18" />
+                <circle cx="205.8" cy="145.8" r="18" />
+                <circle cx="288.2" cy="145.8" r="18" />
+                <circle cx="370.5" cy="145.8" r="18" />
+                <circle cx="452.8" cy="145.8" r="18" />
+                
+                <!-- Row 4 -->
+                <circle cx="82.3" cy="204.2" r="18" />
+                <circle cx="164.6" cy="204.2" r="18" />
+                <circle cx="246.9" cy="204.2" r="18" />
+                <circle cx="329.3" cy="204.2" r="18" />
+                <circle cx="411.6" cy="204.2" r="18" />
+                
+                <!-- Row 5 -->
+                <circle cx="41.2" cy="262.5" r="18" />
+                <circle cx="123.5" cy="262.5" r="18" />
+                <circle cx="205.8" cy="262.5" r="18" />
+                <circle cx="288.2" cy="262.5" r="18" />
+                <circle cx="370.5" cy="262.5" r="18" />
+                <circle cx="452.8" cy="262.5" r="18" />
+                
+                <!-- Row 6 -->
+                <circle cx="82.3" cy="320.8" r="18" />
+                <circle cx="164.6" cy="320.8" r="18" />
+                <circle cx="246.9" cy="320.8" r="18" />
+                <circle cx="329.3" cy="320.8" r="18" />
+                <circle cx="411.6" cy="320.8" r="18" />
+            </g>
+            
+            <!-- Adding boxing gloves to USA flag -->
+            <g class="usa-gloves">
+                <circle cx="1150" cy="325" r="30" fill="#C62828" />
+                <path d="M1120 325 Q1100 325 1100 305 Q1100 285 1120 285 L1130 285 Q1130 285 1130 305 Q1130 325 1120 325" fill="#B71C1C" />
+            </g>
+        </svg>
+        
+        <svg class="flag china-flag" viewBox="0 0 1500 1000">
+            <!-- China Flag -->
+            <rect width="1500" height="1000" fill="#DE2910" />
+            
+            <!-- Large Star -->
+            <path d="M 300,350 L 375,500 L 225,400 L 375,400 L 225,500 Z" fill="#FFDE00" transform="rotate(23, 300, 350)" />
+            
+            <!-- Smaller Stars -->
+            <path d="M 600,200 L 623,270 L 577,230 L 623,230 L 577,270 Z" fill="#FFDE00" />
+            <path d="M 600,350 L 623,420 L 577,380 L 623,380 L 577,420 Z" fill="#FFDE00" />
+            <path d="M 600,500 L 623,570 L 577,530 L 623,530 L 577,570 Z" fill="#FFDE00" />
+            <path d="M 600,650 L 623,720 L 577,680 L 623,680 L 577,720 Z" fill="#FFDE00" />
+            
+            <!-- Adding boxing gloves to China flag -->
+            <g class="china-gloves">
+                <circle cx="150" cy="500" r="30" fill="#C62828" />
+                <path d="M180 500 Q200 500 200 520 Q200 540 180 540 L170 540 Q170 540 170 520 Q170 500 180 500" fill="#B71C1C" />
+            </g>
+        </svg>
+        
+        <div class="glove usa-glove"></div>
+        <div class="glove china-glove"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const usaFlag = document.querySelector('.usa-flag');
+            const chinaFlag = document.querySelector('.china-flag');
+            const usaGlove = document.querySelector('.usa-glove');
+            const chinaGlove = document.querySelector('.china-glove');
+            const scoreboard = document.querySelector('.scoreboard');
+            const usaHealth = document.querySelector('.usa-health');
+            const chinaHealth = document.querySelector('.china-health');
+            
+            let usaHealthValue = 100;
+            let chinaHealthValue = 100;
+            let round = 1;
+            let isAnimating = false;
+            
+            // Set initial positions
+            function resetPositions() {
+                usaFlag.style.transform = 'translateX(0) rotate(0)';
+                chinaFlag.style.transform = 'translateX(0) rotate(0)';
+                usaGlove.style.opacity = '0';
+                chinaGlove.style.opacity = '0';
+            }
+            
+            // USA attacks China
+            function usaAttack() {
+                if (isAnimating) return;
+                isAnimating = true;
+                
+                // Move USA flag forward
+                usaFlag.style.transform = 'translateX(100px) rotate(10deg)';
+                
+                // Show and animate glove
+                usaGlove.style.opacity = '1';
+                usaGlove.style.left = '400px';
+                usaGlove.style.top = '250px';
+                
+                setTimeout(() => {
+                    usaGlove.style.left = '520px';
+                    usaGlove.style.top = '230px';
+                    
+                    setTimeout(() => {
+                        // China flag reacts to hit
+                        chinaFlag.style.transform = 'translateX(50px) rotate(-15deg)';
+                        
+                        // Reduce China's health
+                        chinaHealthValue -= Math.floor(Math.random() * 15) + 5;
+                        if (chinaHealthValue < 0) chinaHealthValue = 0;
+                        chinaHealth.style.width = `${chinaHealthValue}%`;
+                        
+                        setTimeout(() => {
+                            // Hide glove and reset positions
+                            usaGlove.style.opacity = '0';
+                            resetPositions();
+                            isAnimating = false;
+                            
+                            // Check if round is over
+                            checkRoundEnd();
+                        }, 500);
+                    }, 100);
+                }, 300);
+            }
+            
+            // China attacks USA
+            function chinaAttack() {
+                if (isAnimating) return;
+                isAnimating = true;
+                
+                // Move China flag forward
+                chinaFlag.style.transform = 'translateX(-100px) rotate(-10deg)';
+                
+                // Show and animate glove
+                chinaGlove.style.opacity = '1';
+                chinaGlove.style.right = '400px';
+                chinaGlove.style.top = '250px';
+                
+                setTimeout(() => {
+                    chinaGlove.style.right = '520px';
+                    chinaGlove.style.top = '230px';
+                    
+                    setTimeout(() => {
+                        // USA flag reacts to hit
+                        usaFlag.style.transform = 'translateX(-50px) rotate(15deg)';
+                        
+                        // Reduce USA's health
+                        usaHealthValue -= Math.floor(Math.random() * 15) + 5;
+                        if (usaHealthValue < 0) usaHealthValue = 0;
+                        usaHealth.style.width = `${usaHealthValue}%`;
+                        
+                        setTimeout(() => {
+                            // Hide glove and reset positions
+                            chinaGlove.style.opacity = '0';
+                            resetPositions();
+                            isAnimating = false;
+                            
+                            // Check if round is over
+                            checkRoundEnd();
+                        }, 500);
+                    }, 100);
+                }, 300);
+            }
+            
+            // Check if round is over
+            function checkRoundEnd() {
+                if (usaHealthValue <= 0 || chinaHealthValue <= 0) {
+                    // Determine winner
+                    let winner = usaHealthValue > chinaHealthValue ? 'USA' : 'CHINA';
+                    if (usaHealthValue === chinaHealthValue) winner = 'DRAW';
+                    
+                    // Update scoreboard
+                    scoreboard.textContent = `ROUND ${round} - ${winner} WINS!`;
+                    
+                    // Start new round after delay
+                    setTimeout(() => {
+                        round++;
+                        usaHealthValue = 100;
+                        chinaHealthValue = 100;
+                        usaHealth.style.width = '100%';
+                        chinaHealth.style.width = '100%';
+                        scoreboard.textContent = `ROUND ${round}`;
+                        startFight();
+                    }, 3000);
+                } else {
+                    // Continue fighting
+                    setTimeout(() => {
+                        if (Math.random() > 0.5) {
+                            usaAttack();
+                        } else {
+                            chinaAttack();
+                        }
+                    }, Math.random() * 1000 + 500);
+                }
+            }
+            
+            // Start the fight
+            function startFight() {
+                resetPositions();
+                setTimeout(() => {
+                    if (Math.random() > 0.5) {
+                        usaAttack();
+                    } else {
+                        chinaAttack();
+                    }
+                }, 1000);
+            }
+            
+            // Initialize the animation
+            startFight();
+        });
+    </script>
+</body>
+</html>
